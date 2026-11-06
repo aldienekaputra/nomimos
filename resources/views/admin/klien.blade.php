@@ -461,13 +461,12 @@
             rBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-gray-400">Belum ada data rundown untuk acara ini.</td></tr>`;
         }
 
-        // 2. RENDER MOODBOARD GAMBAR
+        // 2. RENDER MOODBOARD GAMBAR (DENGAN ROUTE SERVE STORAGE VERCEL)
         const mGrid = document.getElementById('moodboardGrid');
         mGrid.innerHTML = '';
         if(event.moodboards.length > 0) {
             event.moodboards.forEach(m => {
-                // Konversi URL gambar lokal storage
-                const imgUrl = m.url_gambar.startsWith('http') ? m.url_gambar : `{{ asset('storage') }}/${m.url_gambar}`;
+                const imgUrl = m.url_gambar.startsWith('http') ? m.url_gambar : `/storage/${m.url_gambar}`;
                 const card = document.createElement('div');
                 card.className = 'border rounded-xl p-4 bg-slate-50 space-y-3 shadow-sm flex flex-col justify-between';
                 card.innerHTML = `
@@ -497,7 +496,7 @@
             mGrid.innerHTML = `<div class="col-span-3 py-12 text-center text-gray-400">Belum ada referensi gambar/moodboard.</div>`;
         }
 
-        // 3. RENDER NOTE (PERBAIKAN NAMA ATRIBUT CATATAN KE LOWERCASE: list_vip & list_foto_vvip)
+        // 3. RENDER NOTE
         const nAction = document.getElementById('noteActionBox');
         const nContent = document.getElementById('noteContentBox');
         const c = event.catatan;

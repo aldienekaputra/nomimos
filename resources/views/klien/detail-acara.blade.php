@@ -92,7 +92,7 @@
                 $gambarPath = $mb->url_gambar ?? $mb->foto ?? '';
                 $imgSrc = \Illuminate\Support\Str::startsWith($gambarPath, ['http://', 'https://']) 
                     ? $gambarPath 
-                    : asset('storage/' . $gambarPath);
+                    : url('storage/' . $gambarPath);
             @endphp
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex gap-5 items-start">
                 <img src="{{ $imgSrc }}" alt="{{ $mb->keterangan ?? 'Moodboard' }}" class="w-40 h-32 object-cover rounded-xl flex-shrink-0 bg-slate-100 border border-slate-200">

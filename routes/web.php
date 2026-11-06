@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 use App\Models\PaketAcara;
 use App\Models\Klien;
 use App\Models\PemesananAcara;
@@ -35,12 +36,6 @@ Route::get('/about', function () {
 })->name('landing.about');
 
 // Halaman Booking
-Route::get('/booking', function () {
-    $pakets = PaketAcara::all();
-    return view('landing.booking', compact('pakets'));
-})->name('landing.booking');
-
-// RUTE HALAMAN BOOKING LANDING PAGE
 Route::get('/booking', [BookingController::class, 'index'])->name('landing.booking');
 
 // Submit Form Booking (Tanpa Wajib Login)
@@ -70,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/admin/event/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.event.updateStatus');
     
-// TAMBAHKAN ROUTE UPDATE STATUS INI:
+    // TAMBAHKAN ROUTE UPDATE STATUS INI:
     Route::post('/update-status/{id}', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
 
     // Route Klien/Event (Admin Side)
@@ -83,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Moodboard Routes
     Route::post('/admin/klien/moodboard', [ClientController::class, 'storeMoodboard'])->name('admin.moodboard.store');
-    Route::put('/admin/klien/moodboard/{id}', [ClientController::class, 'updateMoodboard'])->name('admin.moodboard.update'); // <-- DITAMBAHKAN
+    Route::put('/admin/klien/moodboard/{id}', [ClientController::class, 'updateMoodboard'])->name('admin.moodboard.update');
     Route::delete('/admin/klien/moodboard/{id}', [ClientController::class, 'destroyMoodboard'])->name('admin.moodboard.destroy');
 
     // Catatan Routes
@@ -143,7 +138,7 @@ Route::middleware(['auth'])->group(function () {
         return view('klien.detail-acara', compact('klien', 'pemesanan'));
     })->name('klien.detail-acara');
 
-    // KELEUANGAN KLIEN
+    // KEUANGAN KLIEN
     Route::get('/klien/keuangan', function () {
         $user = auth()->user();
         $klien = Klien::where('id_user', $user->id_user)->first();
@@ -177,3 +172,21 @@ Route::middleware(['auth'])->group(function () {
         return view('crew.dashboard', compact('crew', 'jobdesks'));
     })->name('crew.dashboard');
 });
+
+// ROUTE KHUSUS UNTUK MEMBACA FILE STORAGE DI VERCEL & LOCALHOST
+Route::get('/storage/{path}', function ($path) {
+    $filePath = '/tmp/storage/app/public/' . $path;
+    
+    if (!file_exists($filePath)) {
+        $filePath = storage_path('app/public/' . $path);
+    }
+
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+
+    $file = file_get_contents($filePath);
+    $type = mime_content_type($filePath);
+
+    return Response::make($file, 200)->header("Content-Type", $type);
+})->where('path', '.*');

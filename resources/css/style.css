@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+/* ==========================================
+   VARIABEL GLOBAL & PALET WARNA NOMIMOS
+   ========================================== */
+:root {
+    --color-navy-main: #1b3152;       /* Warna Utama Navy Header/Banner */
+    --color-navy-dark: #12223a;       /* Navy Gelap Footer */
+    --color-blue-muted: #41729f;      /* Warna Akses Bantuan */
+    --color-btn-login-bg: #e2e8f0;    /* Background Tombol Login Header */
+    --color-btn-login-text: #64748b;  /* Teks Tombol Login Header */
+    --color-bg-light: #f8fafc;        /* Latar Belakang Abu Tipis */
+    
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Inter', sans-serif;
+}
+
+/* Base Font & Color Override */
+body {
+    font-family: var(--font-sans);
+    color: #1e293b;
+    background-color: #ffffff;
+}
+
+/* Utility Class Font */
+.font-serif-title {
+    font-family: var(--font-serif) !important;
+}
+
+.font-sans-body {
+    font-family: var(--font-sans) !important;
+}
+
+/* Class Kustom Warna Nomimos */
+.bg-navy-main {
+    background-color: var(--color-navy-main) !important;
+}
+
+.bg-navy-dark {
+    background-color: var(--color-navy-dark) !important;
+}
+
+.text-navy-main {
+    color: var(--color-navy-main) !important;
+}
+
+/* ================= TOMBOL LOGIN (HEADER) ================= */
+.btn-login-header {
+    display: inline-block !important;
+    background-color: var(--color-btn-login-bg) !important;
+    color: var(--color-btn-login-text) !important;
+    padding: 10px 36px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out !important;
+    border: none !important;
+    cursor: pointer !important;
+}
+
+.btn-login-header:hover {
+    background-color: var(--color-btn-login-hover) !important;
+    color: var(--color-navy-main) !important;
+    transform: translateY(-1px);
+}
+
+/* ================= TOMBOL CONTACT US (FOOTER BANNER) ================= */
+.btn-contact-us {
+    display: inline-block !important;
+    background-color: var(--color-navy-main) !important;
+    color: #ffffff !important;
+    padding: 12px 44px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    cursor: pointer !important;
+}
+
+.btn-contact-us:hover {
+    background-color: var(--color-navy-hover) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    transform: translateY(-1px);
+}
+
+/* MARQUEE RUNNING TEXT BAWAH HERO BANNER */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+

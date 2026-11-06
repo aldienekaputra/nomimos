@@ -33,13 +33,18 @@ $_ENV['CACHE_STORE'] = 'array';
 $_ENV['SESSION_DRIVER'] = 'cookie';
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
-// Override APP_URL & HTTPS scheme untuk keamanan form submission di Vercel
+// Override APP_URL & HTTPS
 putenv("APP_URL=https://nomimos.vercel.app");
 putenv("HTTPS=on");
 $_ENV['APP_URL'] = 'https://nomimos.vercel.app';
 $_ENV['HTTPS'] = 'on';
 $_SERVER['HTTPS'] = 'on';
 $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+
+// SETTINGAN COOKIE & SESSION UNTUK VERCEL HTTPS
+putenv("SESSION_SECURE_COOKIE=true");
+putenv("SESSION_DOMAIN=.vercel.app");
+$_ENV['SESSION_SECURE_COOKIE'] = 'true';
 
 // Override Host Supabase ke Pooler IPv4 & Username dengan Project Ref (hmgnmdpohjlceuimebgh)
 $supabaseHost = 'aws-0-ap-southeast-1.pooler.supabase.com';

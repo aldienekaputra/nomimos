@@ -461,12 +461,15 @@
             rBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-gray-400">Belum ada data rundown untuk acara ini.</td></tr>`;
         }
 
-        // 2. RENDER MOODBOARD GAMBAR (DENGAN ROUTE SERVE STORAGE VERCEL)
+        // 2. RENDER MOODBOARD GAMBAR (BASE64 & URL SUPPORT)
         const mGrid = document.getElementById('moodboardGrid');
         mGrid.innerHTML = '';
         if(event.moodboards.length > 0) {
             event.moodboards.forEach(m => {
-                const imgUrl = m.url_gambar.startsWith('http') ? m.url_gambar : `/storage/${m.url_gambar}`;
+                const imgUrl = (m.url_gambar.startsWith('data:') || m.url_gambar.startsWith('http')) 
+                    ? m.url_gambar 
+                    : `/storage/${m.url_gambar}`;
+
                 const card = document.createElement('div');
                 card.className = 'border rounded-xl p-4 bg-slate-50 space-y-3 shadow-sm flex flex-col justify-between';
                 card.innerHTML = `

@@ -88,9 +88,8 @@
         @if($pemesanan && $pemesanan->moodboard && $pemesanan->moodboard->count() > 0)
             @foreach($pemesanan->moodboard as $mb)
             @php
-                // Tentukan path gambar: cek jika berupa URL eksternal atau file ter-upload di storage
                 $gambarPath = $mb->url_gambar ?? $mb->foto ?? '';
-                $imgSrc = \Illuminate\Support\Str::startsWith($gambarPath, ['http://', 'https://']) 
+                $imgSrc = \Illuminate\Support\Str::startsWith($gambarPath, ['http://', 'https://', 'data:']) 
                     ? $gambarPath 
                     : url('storage/' . $gambarPath);
             @endphp
@@ -109,7 +108,7 @@
         @endif
     </div>
 
-    <!-- TAB KONTEN 3: NOTE & LIST (PERBAIKAN NAMA ATRIBUT CATATAN KE LOWERCASE: list_vip & list_foto_vvip) -->
+    <!-- TAB KONTEN 3: NOTE & LIST -->
     <div x-show="activeTab === 'note'" x-cloak class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 space-y-6">
         <h3 class="font-serif-title text-xl font-bold text-black mb-2">Catatan Khusus & Daftar Keperluan</h3>
         

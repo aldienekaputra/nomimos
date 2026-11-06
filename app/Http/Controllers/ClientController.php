@@ -7,7 +7,6 @@ use App\Models\PemesananAcara;
 use App\Models\RundownAcara;
 use App\Models\Moodboard;
 use App\Models\CatatanAcara;
-use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
@@ -52,7 +51,7 @@ class ClientController extends Controller
         return back()->with('success', 'Rundown berhasil dihapus!');
     }
 
-    // --- CRUD MOODBOARD ---
+    // --- CRUD MOODBOARD (BASE64 STORAGE) ---
     public function storeMoodboard(Request $request)
     {
         $request->validate([
@@ -62,23 +61,12 @@ class ClientController extends Controller
         ]);
 
         $file = $request->file('gambar');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-
-        // Penanganan upload khusus lingkungan serverless Vercel vs Localhost
-        if (env('VERCEL') || isset($_SERVER['VERCEL'])) {
-            $targetDir = '/tmp/storage/app/public/moodboard';
-            if (!file_exists($targetDir)) {
-                @mkdir($targetDir, 0777, true);
-            }
-            $file->move($targetDir, $fileName);
-            $path = 'moodboard/' . $fileName;
-        } else {
-            $path = $file->storeAs('moodboard', $fileName, 'public');
-        }
+        // Convert file gambar ke data URL Base64 untuk disimpan di Supabase
+        $base64 = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
 
         Moodboard::create([
             'id_pemesanan' => $request->id_pemesanan,
-            'url_gambar'   => $path,
+            'url_gambar'   => $base64,
             'keterangan'   => $request->keterangan,
         ]);
 
@@ -97,26 +85,7 @@ class ClientController extends Controller
 
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-
-            if (env('VERCEL') || isset($_SERVER['VERCEL'])) {
-                // Hapus file lama di /tmp jika ada
-                if ($moodboard->url_gambar && file_exists('/tmp/storage/app/public/' . $moodboard->url_gambar)) {
-                    @unlink('/tmp/storage/app/public/' . $moodboard->url_gambar);
-                }
-                
-                $targetDir = '/tmp/storage/app/public/moodboard';
-                if (!file_exists($targetDir)) {
-                    @mkdir($targetDir, 0777, true);
-                }
-                $file->move($targetDir, $fileName);
-                $data['url_gambar'] = 'moodboard/' . $fileName;
-            } else {
-                if ($moodboard->url_gambar && Storage::disk('public')->exists($moodboard->url_gambar)) {
-                    Storage::disk('public')->delete($moodboard->url_gambar);
-                }
-                $data['url_gambar'] = $file->storeAs('moodboard', $fileName, 'public');
-            }
+            $data['url_gambar'] = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
         }
 
         $moodboard->update($data);
@@ -127,19 +96,6 @@ class ClientController extends Controller
     public function destroyMoodboard($id)
     {
         $moodboard = Moodboard::findOrFail($id);
-
-        // Hapus file fisik gambar sesuai environment (Vercel / Local)
-        if (env('VERCEL') || isset($_SERVER['VERCEL'])) {
-            if ($moodboard->url_gambar && file_exists('/tmp/storage/app/public/' . $moodboard->url_gambar)) {
-                @unlink('/tmp/storage/app/public/' . $moodboard->url_gambar);
-            }
-        } else {
-            if ($moodboard->url_gambar && Storage::disk('public')->exists($moodboard->url_gambar)) {
-                Storage::disk('public')->delete($moodboard->url_gambar);
-            }
-        }
-
-        // Hapus record dari database
         $moodboard->delete();
 
         return back()->with('success', 'Moodboard berhasil dihapus!');

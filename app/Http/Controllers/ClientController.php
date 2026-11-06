@@ -115,9 +115,9 @@ class ClientController extends Controller
         CatatanAcara::updateOrCreate(
             ['id_pemesanan' => $id_pemesanan],
             [
-                'list_VIP'          => $request->list_VIP,
+                'list_vip'          => $request->list_VIP,
                 'req_lagu'          => $request->req_lagu,
-                'list_foto_VVIP'    => $request->list_foto_VVIP,
+                'list_foto_vvip'    => $request->list_foto_VVIP,
                 'catatan_kebutuhan' => $request->catatan_kebutuhan,
                 'petugas_keluarga'  => $request->petugas_keluarga,
             ]

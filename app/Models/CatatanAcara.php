@@ -15,9 +15,9 @@ class CatatanAcara extends Model
 
     protected $fillable = [
         'id_pemesanan',
-        'list_VIP',
+        'list_vip',
         'req_lagu',
-        'list_foto_VVIP',
+        'list_foto_vvip',
         'catatan_kebutuhan',
         'petugas_keluarga',
     ];

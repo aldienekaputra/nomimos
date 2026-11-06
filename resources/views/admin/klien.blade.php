@@ -497,14 +497,14 @@
             mGrid.innerHTML = `<div class="col-span-3 py-12 text-center text-gray-400">Belum ada referensi gambar/moodboard.</div>`;
         }
 
-        // 3. RENDER NOTE
+        // 3. RENDER NOTE (PERBAIKAN NAMA ATRIBUT CATATAN KE LOWERCASE: list_vip & list_foto_vvip)
         const nAction = document.getElementById('noteActionBox');
         const nContent = document.getElementById('noteContentBox');
         const c = event.catatan;
 
-        document.getElementById('inputListVip').value = c ? c.list_VIP || '' : '';
+        document.getElementById('inputListVip').value = c ? (c.list_vip || c.list_VIP || '') : '';
         document.getElementById('inputReqLagu').value = c ? c.req_lagu || '' : '';
-        document.getElementById('inputListFotoVvip').value = c ? c.list_foto_VVIP || '' : '';
+        document.getElementById('inputListFotoVvip').value = c ? (c.list_foto_vvip || c.list_foto_VVIP || '') : '';
         document.getElementById('inputCatatanKebutuhan').value = c ? c.catatan_kebutuhan || '' : '';
         document.getElementById('inputPetugasKeluarga').value = c ? c.petugas_keluarga || '' : '';
 
@@ -518,7 +518,7 @@
                 <div class="grid grid-cols-2 gap-6 text-sm">
                     <div class="border border-gray-200 rounded-xl p-5 bg-slate-50 space-y-1">
                         <h4 class="font-serif-title font-bold text-[#1e314b] text-base">List VIP</h4>
-                        <p class="text-gray-700 whitespace-pre-line text-xs leading-relaxed">${c.list_VIP || '-'}</p>
+                        <p class="text-gray-700 whitespace-pre-line text-xs leading-relaxed">${c.list_vip || c.list_VIP || '-'}</p>
                     </div>
                     <div class="border border-gray-200 rounded-xl p-5 bg-slate-50 space-y-1">
                         <h4 class="font-serif-title font-bold text-[#1e314b] text-base">Request Lagu</h4>
@@ -526,7 +526,7 @@
                     </div>
                     <div class="border border-gray-200 rounded-xl p-5 bg-slate-50 space-y-1">
                         <h4 class="font-serif-title font-bold text-[#1e314b] text-base">List Foto VVIP</h4>
-                        <p class="text-gray-700 whitespace-pre-line text-xs leading-relaxed">${c.list_foto_VVIP || '-'}</p>
+                        <p class="text-gray-700 whitespace-pre-line text-xs leading-relaxed">${c.list_foto_vvip || c.list_foto_VVIP || '-'}</p>
                     </div>
                     <div class="border border-gray-200 rounded-xl p-5 bg-slate-50 space-y-1">
                         <h4 class="font-serif-title font-bold text-[#1e314b] text-base">Catatan Kebutuhan</h4>

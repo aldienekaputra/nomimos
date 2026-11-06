@@ -109,16 +109,16 @@
         @endif
     </div>
 
-    <!-- TAB KONTEN 3: NOTE & LIST -->
+    <!-- TAB KONTEN 3: NOTE & LIST (PERBAIKAN NAMA ATRIBUT CATATAN KE LOWERCASE: list_vip & list_foto_vvip) -->
     <div x-show="activeTab === 'note'" x-cloak class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 space-y-6">
         <h3 class="font-serif-title text-xl font-bold text-black mb-2">Catatan Khusus & Daftar Keperluan</h3>
         
         @if($pemesanan && $pemesanan->catatan)
             <div class="grid md:grid-cols-2 gap-6 text-sm text-black">
-                @if(!empty($pemesanan->catatan->list_VIP))
+                @if(!empty($pemesanan->catatan->list_vip) || !empty($pemesanan->catatan->list_VIP))
                 <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
                     <span class="font-bold block font-serif-title text-base text-[#1e314b]">List Tamu VIP:</span>
-                    <p class="text-slate-700 whitespace-pre-line">{{ $pemesanan->catatan->list_VIP }}</p>
+                    <p class="text-slate-700 whitespace-pre-line">{{ $pemesanan->catatan->list_vip ?? $pemesanan->catatan->list_VIP }}</p>
                 </div>
                 @endif
 
@@ -129,10 +129,10 @@
                 </div>
                 @endif
 
-                @if(!empty($pemesanan->catatan->list_foto_VVIP))
+                @if(!empty($pemesanan->catatan->list_foto_vvip) || !empty($pemesanan->catatan->list_foto_VVIP))
                 <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
                     <span class="font-bold block font-serif-title text-base text-[#1e314b]">List Foto VVIP:</span>
-                    <p class="text-slate-700 whitespace-pre-line">{{ $pemesanan->catatan->list_foto_VVIP }}</p>
+                    <p class="text-slate-700 whitespace-pre-line">{{ $pemesanan->catatan->list_foto_vvip ?? $pemesanan->catatan->list_foto_VVIP }}</p>
                 </div>
                 @endif
 

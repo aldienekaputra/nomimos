@@ -1,6 +1,11 @@
 <?php
 
-// 1. Setup path penyimpanan sementara khusus runtime Vercel (/tmp)
+// Turn on full error display for debugging on Vercel
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// 1. Inisialisasi folder temporer untuk penyimpanan Laravel di sistem read-only Vercel
 $baseStorage = '/tmp/storage';
 
 $directories = [
@@ -13,7 +18,7 @@ $directories = [
 
 foreach ($directories as $dir) {
     if (!is_dir($dir)) {
-        @mkdir($dir, 0777, true);
+        @mkdir($dir, 0755, true);
     }
 }
 
@@ -28,12 +33,17 @@ $_ENV['VIEW_COMPILED_PATH'] = "{$baseStorage}/framework/views";
 $_ENV['CACHE_STORE'] = 'array';
 $_ENV['SESSION_DRIVER'] = 'cookie';
 
-// 3. Masukkan handler error untuk menangkap exception tak terduga
+// 3. Tangkap dan tampilkan jika ada Fatal Error pada PHP / Database
 try {
     require __DIR__ . '/../public/index.php';
 } catch (\Throwable $e) {
     http_response_code(500);
-    echo "<h1>Runtime Error</h1>";
-    echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
-    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo '<div style="padding: 20px; font-family: sans-serif; background: #fff0f0; border: 1px solid #ffcdd2; color: #b71c1c;">';
+    echo '<h2>Laravel Runtime Error</h2>';
+    echo '<p><b>Message:</b> ' . htmlspecialchars($e->getMessage()) . '</p>';
+    echo '<p><b>File:</b> ' . htmlspecialchars($e->getFile()) . ' on line ' . $e->getLine() . '</p>';
+    echo '<h3>Trace:</h3>';
+    echo '<pre style="background: #fff; padding: 10px; border: 1px solid #ddd; overflow: auto;">' . htmlspecialchars($e->getTraceAsString()) . '</pre>';
+    echo '</div>';
+    exit;
 }

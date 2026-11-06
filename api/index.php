@@ -33,11 +33,18 @@ $_ENV['CACHE_STORE'] = 'array';
 $_ENV['SESSION_DRIVER'] = 'cookie';
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
-// Override Host Supabase ke Pooler IPv4 secara otomatis di runtime
-putenv("DB_HOST=aws-0-ap-southeast-1.pooler.supabase.com");
-putenv("DB_PORT=6543");
-$_ENV['DB_HOST'] = 'aws-0-ap-southeast-1.pooler.supabase.com';
-$_ENV['DB_PORT'] = '6543';
+// Override Host Supabase ke Pooler IPv4 & Username dengan Project Ref (hmgnmdpohjlceuimebgh)
+$supabaseHost = 'aws-0-ap-southeast-1.pooler.supabase.com';
+$supabasePort = '6543';
+$supabaseUser = 'postgres.hmgnmdpohjlceuimebgh';
+
+putenv("DB_HOST={$supabaseHost}");
+putenv("DB_PORT={$supabasePort}");
+putenv("DB_USERNAME={$supabaseUser}");
+
+$_ENV['DB_HOST'] = $supabaseHost;
+$_ENV['DB_PORT'] = $supabasePort;
+$_ENV['DB_USERNAME'] = $supabaseUser;
 
 try {
     require __DIR__ . '/../public/index.php';

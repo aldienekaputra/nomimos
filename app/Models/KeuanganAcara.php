@@ -16,11 +16,11 @@ class KeuanganAcara extends Model
     protected $fillable = [
         'id_pemesanan',
         'status_pembayaran',
-        'tgl_sewa_WO',
-        'dp_WO',
+        'tgl_sewa_wo',
+        'dp_wo',
         'tgl_hitung_pelunasan',
-        'sisa_pelunasan_WO',
-        'tgl_Jatuh_tempo',
+        'sisa_pelunasan_wo',
+        'tgl_jatuh_tempo',
     ];
 
     public function pemesanan()

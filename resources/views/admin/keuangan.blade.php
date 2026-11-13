@@ -3,7 +3,7 @@
 @section('title', 'Keuangan')
 
 @section('content')
-<main class="flex-1 p-8 overflow-y-auto space-y-6 bg-[#e9eff6]" x-data="{ showEditModal: false }">
+<main class="flex-1 p-4 md:p-8 overflow-y-auto space-y-6 bg-[#e9eff6]" x-data="{ showEditModal: false }">
     
     <!-- NOTIFIKASI SUKSES -->
     @if(session('success'))
@@ -14,18 +14,18 @@
     @endif
 
     <!-- HEADER BAR: JUDUL & FILTER DROPDOWN INTERAKTIF -->
-    <div class="flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-5 rounded-2xl shadow-sm border border-gray-100 gap-4">
         <div>
-            <h2 class="font-serif-title text-2xl font-bold text-black">Laporan Keuangan WO</h2>
+            <h2 class="font-serif-title text-xl md:text-2xl font-bold text-black">Laporan Keuangan WO</h2>
             <p class="text-xs text-gray-500 mt-0.5">Filter bulan untuk mempersempit pencarian pengantin</p>
         </div>
         
-        <div class="flex items-center gap-3">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
             <!-- 1. FILTER BULAN -->
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full sm:w-auto">
                 <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">1. Pilih Bulan Acara</label>
                 <select id="filterBulan" onchange="filterKlienByBulan()" 
-                        class="bg-[#f8fafc] border border-gray-300 text-gray-800 text-xs font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#1e314b] shadow-sm cursor-pointer">
+                        class="w-full bg-[#f8fafc] border border-gray-300 text-gray-800 text-xs font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#1e314b] shadow-sm cursor-pointer">
                     <option value="">-- Semua Bulan --</option>
                     <option value="01">Januari</option>
                     <option value="02">Februari</option>
@@ -43,10 +43,10 @@
             </div>
 
             <!-- 2. FILTER NAMA PENGANTIN -->
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full sm:w-auto">
                 <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">2. Pilih Pengantin</label>
                 <select id="filterKlien" onchange="renderDetailKeuangan(this.value)" 
-                        class="bg-[#f8fafc] border border-gray-300 text-gray-800 text-xs font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#1e314b] shadow-sm min-w-[240px] cursor-pointer">
+                        class="w-full bg-[#f8fafc] border border-gray-300 text-gray-800 text-xs font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#1e314b] shadow-sm min-w-0 sm:min-w-[240px] cursor-pointer">
                 </select>
             </div>
         </div>
@@ -55,7 +55,7 @@
     <!-- AREA RINGKASAN & DETAIL KEUANGAN -->
     <div id="contentArea" class="space-y-6">
         <!-- Grid Ringkasan Card -->
-        <div class="grid grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-2">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Paket Dipilih</p>
                 <h4 id="cardPaketNama" class="font-serif-title font-bold text-xl text-[#1e314b]">-</h4>
@@ -76,23 +76,23 @@
         </div>
 
         <!-- Detail Rincian Keuangan -->
-        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-6">
-            <div class="flex justify-between items-center border-b pb-4">
-                <div class="flex items-center gap-3">
+        <div class="bg-white rounded-2xl p-5 md:p-8 shadow-sm border border-gray-100 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 gap-3">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
                     <div>
-                        <h3 id="detailNamaTitle" class="font-serif-title text-xl font-bold text-black">Rincian Pembayaran WO</h3>
+                        <h3 id="detailNamaTitle" class="font-serif-title text-lg md:text-xl font-bold text-black">Rincian Pembayaran WO</h3>
                         <p id="detailAcaraSubtitle" class="text-xs text-gray-500">Tanggal Acara: -</p>
                     </div>
                     <!-- BADGE STATUS LUNAS / PENDING -->
-                    <div id="badgeStatusPembayaran" class="ml-2"></div>
+                    <div id="badgeStatusPembayaran"></div>
                 </div>
                 
-                <button @click="showEditModal = true" class="bg-amber-600 text-white text-xs px-4 py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition-colors shadow-sm">
+                <button @click="showEditModal = true" class="w-full sm:w-auto justify-center bg-amber-600 text-white text-xs px-4 py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition-colors shadow-sm">
                     Edit Keuangan
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 gap-8 text-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 text-sm">
                 <div class="space-y-4">
                     <div class="flex justify-between border-b pb-2">
                         <span class="text-gray-600 font-medium">Tanggal Sewa WO</span>
@@ -127,13 +127,13 @@
     </div>
 
     <!-- PESAN JIKA TIDAK ADA KLIEN -->
-    <div id="emptyArea" class="hidden bg-white rounded-2xl p-12 text-center border border-gray-100 text-slate-400 text-sm">
+    <div id="emptyArea" class="hidden bg-white rounded-2xl p-8 md:p-12 text-center border border-gray-100 text-slate-400 text-sm">
         Tidak ditemukan acara pengantin pada bulan terpilih.
     </div>
 
     <!-- MODAL EDIT KEUANGAN -->
     <div x-show="showEditModal" style="display: none;" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-4 shadow-xl relative" @click.outside="showEditModal = false">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-4 shadow-xl relative max-h-[90vh] overflow-y-auto" @click.outside="showEditModal = false">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="font-serif-title font-bold text-lg text-black">Edit Rincian Keuangan WO</h3>
                 <button @click="showEditModal = false" class="text-gray-400 hover:text-gray-600 font-bold text-xl">&times;</button>
@@ -199,12 +199,12 @@
             lokasi: {!! json_encode($e->lokasi_acara) !!},
             paketNama: {!! json_encode($e->paket->nama_paket ?? 'Custom Package') !!},
             hargaPaket: {{ $e->paket->harga_paket ?? 0 }},
-            dpWo: {{ $e->keuangan->dp_WO ?? 0 }},
-            sisaWo: {{ $e->keuangan->sisa_pelunasan_WO ?? 0 }},
+            dpWo: {{ $e->keuangan->dp_wo ?? ($e->keuangan->dp_WO ?? 0) }},
+            sisaWo: {{ $e->keuangan->sisa_pelunasan_wo ?? ($e->keuangan->sisa_pelunasan_WO ?? 0) }},
             statusPembayaran: {!! json_encode($e->keuangan->status_pembayaran ?? 'Pending') !!},
-            tglSewa: '{{ $e->keuangan->tgl_sewa_WO ?? "" }}',
+            tglSewa: '{{ $e->keuangan->tgl_sewa_wo ?? ($e->keuangan->tgl_sewa_WO ?? "") }}',
             tglHitung: '{{ $e->keuangan->tgl_hitung_pelunasan ?? "" }}',
-            tglJatuhTempo: '{{ $e->keuangan->tgl_Jatuh_tempo ?? "" }}',
+            tglJatuhTempo: '{{ $e->keuangan->tgl_jatuh_tempo ?? ($e->keuangan->tgl_Jatuh_tempo ?? "") }}',
             updateUrl: '{{ route("admin.keuangan.update", $e->id_pemesanan) }}'
         },
         @endforeach

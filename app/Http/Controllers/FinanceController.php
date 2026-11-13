@@ -33,11 +33,11 @@ class FinanceController extends Controller
             ['id_pemesanan' => $id_pemesanan],
             [
                 'status_pembayaran'     => $request->status_pembayaran,
-                'tgl_sewa_WO'           => $request->tgl_sewa_WO,
-                'dp_WO'                 => $request->dp_WO,
+                'tgl_sewa_wo'           => $request->tgl_sewa_WO,
+                'dp_wo'                 => $request->dp_WO,
                 'tgl_hitung_pelunasan' => $request->tgl_hitung_pelunasan,
-                'sisa_pelunasan_WO'     => $request->sisa_pelunasan_WO,
-                'tgl_Jatuh_tempo'       => $request->tgl_Jatuh_tempo,
+                'sisa_pelunasan_wo'     => $request->sisa_pelunasan_WO,
+                'tgl_jatuh_tempo'       => $request->tgl_Jatuh_tempo,
             ]
         );
 
